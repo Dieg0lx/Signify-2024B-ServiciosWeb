@@ -7,7 +7,7 @@ A continuación se describen los microservicios que componen el sistema:
 
 ### 1. Servicio de Gestión de Usuarios
 - **Servicio de nube:** [Amazon Web Service]
-- **Lenguaje utilizado:** [Python]
+- **Lenguaje:** [Python]
 - **Framework:** [Django]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
@@ -16,7 +16,7 @@ A continuación se describen los microservicios que componen el sistema:
 
 ### 2. Servicio de Contenidos
 - **Servicio de nube:** [Amazon Web Service]
-- **Lenguaje utilizado:** [Python]
+- **Lenguaje:** [Python]
 - **Framework:** [Django]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
@@ -24,7 +24,7 @@ A continuación se describen los microservicios que componen el sistema:
 
 ### 3. Servicio de Evaluación
 - **Servicio de nube:** [Amazon Web Service]
-- **Lenguaje utilizado:** [Python]
+- **Lenguaje:** [Python]
 - **Framework:** [Django]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
@@ -32,7 +32,7 @@ A continuación se describen los microservicios que componen el sistema:
 
 ### 4. Servicio de Notificaciones
 - **Servicio de nube:** [Amazon Web Service]
-- **Lenguaje utilizado:** [Python]
+- **Lenguaje:** [Python]
 - **Framework:** [Django]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
