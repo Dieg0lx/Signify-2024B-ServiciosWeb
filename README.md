@@ -2,6 +2,7 @@
 El proyecto consiste en una aplicación de autoaprendizaje enfocada en el lenguaje de señas.
 La arquitectura de la aplicación está fragmentada en microservicios para optimizar el desarrollo y la escalabilidad.
 A continuación se describen los microservicios que componen el sistema:
+
 ## Microservicios
 
 ### 1. Servicio de Gestión de Usuarios
