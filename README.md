@@ -6,6 +6,7 @@ A continuación se describen los microservicios que componen el sistema:
 ## Microservicios
 
 ### 1. Servicio de Gestión de Usuarios
+- **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
 - **Framework:** [Django]
@@ -15,6 +16,7 @@ A continuación se describen los microservicios que componen el sistema:
  Permite a los usuarios crear cuentas, iniciar sesión y actualizar su información personal.
 
 ### 2. Servicio de Contenidos
+- **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
 - **Framework:** [Django]
@@ -23,6 +25,7 @@ A continuación se describen los microservicios que componen el sistema:
  Este servicio maneja todo el contenido educativo relacionado con el lenguaje de señas. Administra recursos como videos, imágenes y textos educativos, y proporciona acceso a los materiales de aprendizaje para los usuarios.
 
 ### 3. Servicio de Evaluación
+- **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
 - **Framework:** [Django]
@@ -31,6 +34,7 @@ A continuación se describen los microservicios que componen el sistema:
  Este servicio gestiona las evaluaciones y pruebas del usuario. Permite la creación, administración y seguimiento de evaluaciones, así como la calificación y retroalimentación sobre el desempeño del usuario.
 
 ### 4. Servicio de Notificaciones
+- **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
 - **Framework:** [Django]
