@@ -6,6 +6,7 @@ A continuación se describen los microservicios que componen el sistema:
 ## Microservicios
 
 ### 1. Servicio de Gestión de Usuarios
+- **Lenguaje utilizado:** [Python]
 - **Framework:** [Django]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
@@ -13,17 +14,21 @@ A continuación se describen los microservicios que componen el sistema:
  Permite a los usuarios crear cuentas, iniciar sesión y actualizar su información personal.
 
 ### 2. Servicio de Contenidos
+- **Lenguaje utilizado:** [Python]
 - **Framework:** [Django]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
  Este servicio maneja todo el contenido educativo relacionado con el lenguaje de señas. Administra recursos como videos, imágenes y textos educativos, y proporciona acceso a los materiales de aprendizaje para los usuarios.
+
 ### 3. Servicio de Evaluación
+- **Lenguaje utilizado:** [Python]
 - **Framework:** [Django]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
  Este servicio gestiona las evaluaciones y pruebas del usuario. Permite la creación, administración y seguimiento de evaluaciones, así como la calificación y retroalimentación sobre el desempeño del usuario.
 
 ### 4. Servicio de Notificaciones
+- **Lenguaje utilizado:** [Python]
 - **Framework:** [Django]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
