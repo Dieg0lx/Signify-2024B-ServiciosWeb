@@ -79,6 +79,7 @@ A continuación se describen los microservicios que componen el sistema:
 - **Descripción:**
  Este servicio gestiona las evaluaciones y pruebas del usuario. Permite la creación, administración y seguimiento de evaluaciones, así como la calificación y retroalimentación sobre el desempeño del usuario.
 
+*Tabla: evaluaciones*
 | Columna         | Tipo de Dato    | Descripción                           |
 |-----------------|-----------------|---------------------------------------|
 | id            | INT (PK)      | Identificador único de la evaluación   |
