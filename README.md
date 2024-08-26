@@ -120,6 +120,7 @@ A continuación se describen los microservicios que componen el sistema:
 - **Descripción:**
  Este servicio se encarga de enviar notificaciones a los usuarios sobre eventos importantes, como actualizaciones de contenido, recordatorios de evaluaciones, y mensajes de interés general. Asegura que los usuarios se mantengan informados y comprometidos con la aplicación.
 
+*Tabla: notificaciones*
 | Columna         | Tipo de Dato    | Descripción                           |
 |-----------------|-----------------|---------------------------------------|
 | id            | INT (PK)      | Identificador único de la notificación |
