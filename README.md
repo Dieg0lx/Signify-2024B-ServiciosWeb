@@ -70,6 +70,8 @@ A continuación se describen los microservicios que componen el sistema:
 | contenido_id  | INT (FK)      | Identificador del contenido            |
 | categoria_id  | INT (FK)      | Identificador de la categoría          |
 
+![Diagrama de servicio contenidos](https://raw.githubusercontent.com/Dieg0lx/Proyecto-Servicios-Web/main/imgs_readme/tabla_2.png)
+
 ### 3. Servicio de Evaluación
 - **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
@@ -111,6 +113,8 @@ A continuación se describen los microservicios que componen el sistema:
 | calificacion  | FLOAT         | Calificación obtenida                  |
 | fecha         | DATETIME      | Fecha en la que se realizó la evaluación|
 
+![Diagrama de servicio evaluacion](https://raw.githubusercontent.com/Dieg0lx/Proyecto-Servicios-Web/main/imgs_readme/tabla_3.png)
+
 ### 4. Servicio de Notificaciones
 - **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
@@ -128,3 +132,6 @@ A continuación se describen los microservicios que componen el sistema:
 | mensaje       | TEXT          | Contenido del mensaje                 |
 | fecha_envio   | DATETIME      | Fecha y hora del envío de la notificación |
 | leido         | BOOLEAN       | Estado de la notificación (leído/no leído) |
+
+![Diagrama de servicio evaluacion](https://raw.githubusercontent.com/Dieg0lx/Proyecto-Servicios-Web/main/imgs_readme/tabla_4.png)
+
