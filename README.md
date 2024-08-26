@@ -37,6 +37,8 @@ A continuación se describen los microservicios que componen el sistema:
 | usuario_id    | INT (FK)      | Identificador del usuario              |
 | rol_id        | INT (FK)      | Identificador del rol                  |
 
+![Diagrama de servicio de gestion de usuarios](https://github.com/Dieg0lx/Proyecto-Servicios-Web/blob/main/imgs_readme/tabla_1.png)
+
 ### 2. Servicio de Contenidos
 - **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
