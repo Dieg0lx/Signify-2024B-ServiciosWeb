@@ -9,7 +9,7 @@ A continuación se describen los microservicios que componen el sistema:
 - **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
-- **Framework:** [Django]
+- **Framework:** [Flask]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
  Este servicio se encarga de la administración de usuarios, incluyendo el registro, autenticación, y gestión de perfiles.
@@ -43,7 +43,7 @@ A continuación se describen los microservicios que componen el sistema:
 - **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
-- **Framework:** [Django]
+- **Framework:** [Flask]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
  Este servicio maneja todo el contenido educativo relacionado con el lenguaje de señas. Administra recursos como videos, imágenes y textos educativos, y proporciona acceso a los materiales de aprendizaje para los usuarios.
@@ -76,7 +76,7 @@ A continuación se describen los microservicios que componen el sistema:
 - **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
-- **Framework:** [Django]
+- **Framework:** [Flask]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
  Este servicio gestiona las evaluaciones y pruebas del usuario. Permite la creación, administración y seguimiento de evaluaciones, así como la calificación y retroalimentación sobre el desempeño del usuario.
@@ -119,7 +119,7 @@ A continuación se describen los microservicios que componen el sistema:
 - **Interfaz grafica:** [Flutter]
 - **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
-- **Framework:** [Django]
+- **Framework:** [Flask]
 - **Base de Datos:** [MySQL]
 - **Descripción:**
  Este servicio se encarga de enviar notificaciones a los usuarios sobre eventos importantes, como actualizaciones de contenido, recordatorios de evaluaciones, y mensajes de interés general. Asegura que los usuarios se mantengan informados y comprometidos con la aplicación.
