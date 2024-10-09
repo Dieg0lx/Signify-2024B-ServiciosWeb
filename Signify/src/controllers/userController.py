@@ -20,12 +20,12 @@ def login():
         try:
             user = Usuario.query.filter_by(nombre=username, contrasena=password).first()
             if user:
-                return "Usuario encontrado"
+                render_template('index.html')
             else:
                 return "Usuario no encontrado"
         except Exception as e:
             print(e)
-    return render_template('login.html')
+    return "Error de conexion"
 
 def second():
     try:
