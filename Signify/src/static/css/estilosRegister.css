@@ -1,0 +1,38 @@
+body {
+    background-color: #e7f3f5;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.logo {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: black;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000;
+}
+
+.form-control {
+    border-radius: 20px;
+    background-color: #f0f4f8;
+}
+
+.btn-primary {
+    background-color: #d1a1e9;
+    border-color: #d1a1e9;
+    border-radius: 20px;
+}
+
+.btn-secondary {
+    background-color: #b78fd2;
+    border-color: #b78fd2;
+    border-radius: 20px;
+}
