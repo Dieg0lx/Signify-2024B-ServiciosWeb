@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from app import db
+from Signify.src.app import db
 from sqlalchemy.exc import OperationalError
 from sqlalchemy import text
 from model.usuario import Usuario

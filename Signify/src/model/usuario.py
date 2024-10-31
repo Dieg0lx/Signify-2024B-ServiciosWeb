@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from app import db
+from Signify.src.app import db
 
 # Definir el modelo de Usuario
 class Usuario(db.Model):

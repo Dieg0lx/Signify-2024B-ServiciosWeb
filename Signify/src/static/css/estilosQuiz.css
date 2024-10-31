@@ -1,0 +1,24 @@
+.question {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f3f4f6;
+    border-radius: 0.5rem;
+}
+
+.question p {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.question label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.question input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+button[type="submit"] {
+    margin-top: 1rem;
+}

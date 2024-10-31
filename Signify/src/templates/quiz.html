@@ -1,41 +1,25 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuestionario</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Cuestionario</h1>
-    <form action="/submit" method="post">
-        {% set question_counter = 1 %}  {# Inicializamos el contador #}
-        {% for question in quiz %}
+{% extends "layout.html" %}
+
+{% block title %}Cuestionario - {{ course.name }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosQuiz.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h2>Cuestionario: {{ course.name }}</h2>
+    <form action="{{ url_for('submit_quiz', course_id=course.id) }}" method="post">
+        {% for question in questions %}
             <div class="question">
                 <p>{{ question.question }}</p>
-                <input type="radio" id="question{{ question.id }}_1" name="question{{ question.id }}" value="1" required>
-                <label for="question{{ question.id }}_1">{{ question.option1 }}</label><br>
-                <input type="radio" id="question{{ question.id }}_2" name="question{{ question.id }}" value="2">
-                <label for="question{{ question.id }}_2">{{ question.option2 }}</label><br>
-                <input type="radio" id="question{{ question.id }}_3" name="question{{ question.id }}" value="3">
-                <label for="question{{ question.id }}_3">{{ question.option3 }}</label><br>
-                <input type="radio" id="question{{ question.id }}_4" name="question{{ question.id }}" value="4">
-                <label for="question{{ question.id }}_4">{{ question.option4 }}</label><br>
+                {% for option in question.options %}
+                    <label>
+                        <input type="radio" name="question{{ question.id }}" value="{{ loop.index }}" required>
+                        {{ option }}
+                    </label>
+                {% endfor %}
             </div>
-            {% set question_counter = question_counter + 1 %}  {# Incrementamos el contador #}
         {% endfor %}
-        <button type="submit">Enviar</button>
+        <button type="submit" class="btn">Enviar Respuestas</button>
     </form>
-</body>
-</html>
+{% endblock %}

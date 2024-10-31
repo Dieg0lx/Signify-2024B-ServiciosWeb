@@ -1,4 +1,4 @@
-from app import app
+from Signify.src.app import app
 from controllers.userController import first, login, second
 from controllers.quizController import quiz_page, submit
 

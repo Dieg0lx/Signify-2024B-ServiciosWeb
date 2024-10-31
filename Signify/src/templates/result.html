@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado del Cuestionario</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block title %}Resultado del Cuestionario - Signify{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosResult.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="result-container">
     <h1>Resultado del Cuestionario</h1>
     <p>Tu puntuación es: {{ score }} de {{ total }}</p>
-    <a href="/">Volver al inicio</a>
-</body>
-</html>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</div>
+{% endblock %}

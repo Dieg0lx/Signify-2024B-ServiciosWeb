@@ -1,48 +1,49 @@
-from flask import render_template, request
-from app import db
-import mysql.connector
+from flask import render_template, request, redirect, url_for
+from Signify.src.app import app, db
+from flask_login import current_user, login_required
 
-# Configuración de la conexión a la base de datos para el cuestionario
-def get_db_connection():
-    connection = mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='cesar123',
-        database='signify'  # Base de datos para los cuestionarios
-    )
-    return connection
+class Quiz(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(200), nullable=False)
+    option1 = db.Column(db.String(100), nullable=False)
+    option2 = db.Column(db.String(100), nullable=False)
+    option3 = db.Column(db.String(100), nullable=False)
+    option4 = db.Column(db.String(100), nullable=False)
+    correct_option = db.Column(db.Integer, nullable=False)
 
-def quiz_page():
-    connection = get_db_connection()
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM quizzes')
-    quiz = cursor.fetchall()
-    cursor.close()
-    connection.close()
-    return render_template('quiz.html', quiz=quiz)
+class UserQuizResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    score = db.Column(db.Integer, nullable=False)
+    total_questions = db.Column(db.Integer, nullable=False)
 
-def submit():
+@app.route('/quiz')
+@login_required
+def quiz():
+    questions = Quiz.query.all()
+    return render_template('quiz.html', quiz=questions)
+
+@app.route('/submit_quiz', methods=['POST'])
+@login_required
+def submit_quiz():
     correct_answers = {}
+    questions = Quiz.query.all()
     
-    connection = get_db_connection()
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute('SELECT id, correct_option FROM quizzes')
-    questions = cursor.fetchall()
-
     for question in questions:
-        question_id = f'question{question["id"]}'
-        correct_answers[question_id] = question['correct_option']
-
+        correct_answers[f'question{question.id}'] = question.correct_option
+    
     score = 0
     total_questions = len(questions)
-
+    
     for i in range(total_questions):
         question_key = f'question{i + 1}'
         answer = request.form.get(question_key)
         if answer and int(answer) == correct_answers[question_key]:
             score += 1
-
-    cursor.close()
-    connection.close()
-
+    
+    # Guardar el resultado del usuario
+    result = UserQuizResult(user_id=current_user.id, score=score, total_questions=total_questions)
+    db.session.add(result)
+    db.session.commit()
+    
     return render_template('result.html', score=score, total=total_questions)
