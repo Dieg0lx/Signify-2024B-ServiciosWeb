@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados del Curso - Signify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/course_results.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1 class="logo">Signify</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('courses_page') }}" {% if request.endpoint == 'courses_page' %}class="active"{% endif %}>Cursos</a></li>
+                <li><a href="{{ url_for('results') }}" {% if request.endpoint == 'results' %}class="active"{% endif %}>Resultados</a></li>
+                <li><a href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}class="active"{% endif %}>Perfil</a></li>
+            </ul>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Cerrar sesión</a>
+        </nav>
+        </nav>
+        
+        <main class="content">
+            <div class="results-container">
+                <div class="results-header">
+                    <h1>Resultados del Curso: {{ cr.title }}</h1>
+                    <p>¡Has completado el curso! Aquí están tus resultados.</p>
+                </div>
+                
+                <div class="score-container">
+                    <p class="score">Puntuación: {{ cr.score }}%</p>
+                </div>
+                
+                <p class="congratulations">¡Felicitaciones por completar el curso!</p>
+                
+                <div class="actions">
+                    <a href="{{ url_for('courses_page') }}" class="btn">Volver a los cursos</a>
+                    <a href="{{ url_for('results') }}" class="btn">Ver todos los resultados</a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

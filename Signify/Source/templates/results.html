@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Signify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1 class="logo">Signify</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('courses_page') }}">Cursos</a></li>
+                <li><a href="{{ url_for('results') }}" class="active">Resultados</a></li>
+                <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+            </ul>
+        </nav>
+        
+        <main class="content">
+            <div class="results-container">
+                <div class="results-header">
+                    <h2>¡Tus Resultados Brillantes!</h2>
+                    <p>Cada paso te acerca más a la fluidez. ¡Sigue así!</p>
+                </div>
+                
+                <div class="results-summary">
+                    <div class="result-card">
+                        <h3>Cursos Completados</h3>
+                        <p class="result-number">{{ user.completed_courses }}</p>
+                    </div>
+                    <div class="result-card">
+                        <h3>Puntos Totales</h3>
+                        <p class="result-number">{{ user.total_points }}</p>
+                    </div>
+                    <div class="result-card">
+                        <h3>Nivel Actual</h3>
+                        <p class="result-number">{{ user.level }}</p>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <h3>Tu Progreso de Nivel</h3>
+                    <div class="level-progress">
+                        <div class="progress-bar" style="width: {{ user.level_progress }}%"></div>
+                    </div>
+                    <div class="level-info">
+                        <span>Nivel {{ user.level }}</span>
+                        <span>{{ user.level_progress }}% completado</span>
+                        <span>Nivel {{ user.level + 1 }}</span>
+                    </div>
+                </div>
+                
+                <div class="achievements-section">
+                    <h3>Logros Desbloqueados</h3>
+                    <div class="achievements-grid">
+                        {% for achievement in user.achievements %}
+                        <div class="achievement-card {% if achievement.unlocked %}unlocked{% endif %}">
+                            <img src="{{ url_for('static', filename='images/' + achievement.icon) }}" alt="{{ achievement.name }}">
+                            <p>{{ achievement.name }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="missions-summary">
+                    <h3>Misiones en Progreso</h3>
+                    <ul class="missions-list">
+                        {% for mission in missions %}
+                        <li class="mission-item">
+                            <div class="mission-info">
+                                <h4>{{ mission.title }}</h4>
+                                <div class="mission-progress">
+                                    <div class="progress-bar" style="width: {{ (mission.progress / mission.goal) * 100 }}%"></div>
+                                </div>
+                            </div>
+                            <span class="mission-status">{{ mission.progress }} / {{ mission.goal }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

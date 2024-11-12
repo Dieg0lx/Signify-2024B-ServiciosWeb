@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - SIGNIFY</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1 class="logo">Signify</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('courses_page') }}">Cursos</a></li>
+                <li><a href="{{ url_for('results') }}">Resultados</a></li>
+                <li><a href="{{ url_for('profile') }}" class="active">Perfil</a></li>
+            </ul>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Cerrar sesión</a>
+        </nav>
+        <main class="content">
+            <section class="profile-info">
+                <h2>Perfil de Usuario</h2>
+                <div class="profile-image-container">
+                    <form action="{{ url_for('upload_profile_image') }}" method="POST" enctype="multipart/form-data" class="profile-form">
+                        <label for="profile_image" class="profile-image-label">
+                            <img src="{{ url_for('static', filename='images/' + user.profile_image) }}" alt="Foto de perfil" class="profile-image">
+                            <div class="profile-image-overlay">
+                                <span class="upload-icon">📷</span>
+                            </div>
+                            <input type="file" id="profile_image" name="profile_image" accept="image/*" class="hidden-input" onchange="this.form.submit()">
+                        </label>
+                    </form>
+                </div>
+                <p><strong>Nombre:</strong> {{ user.nombres }} {{ user.apellidos }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Fecha de registro:</strong> {{ user.join_date }}</p>
+                <p><strong>Cursos completados:</strong> {{ user.completed_courses }}</p>
+                <p><strong>Puntos totales:</strong> {{ user.total_points }}</p>
+                <div class="profile-actions">
+                    <div class="button-container">
+                        <form action="{{ url_for('delete_account') }}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.');" class="delete-form">
+                            <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
+                        </form>
+                        <a href="{{ url_for('change_password') }}" class="btn btn-primary">Cambiar contraseña</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

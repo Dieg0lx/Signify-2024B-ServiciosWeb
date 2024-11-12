@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos - Signify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h1 class="logo">Signify</h1>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('courses_page') }}" {% if request.endpoint == 'courses_page' %}class="active"{% endif %}>Cursos</a></li>
+                <li><a href="{{ url_for('results') }}" {% if request.endpoint == 'results' %}class="active"{% endif %}>Resultados</a></li>
+                <li><a href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}class="active"{% endif %}>Perfil</a></li>
+            </ul>
+            
+        </nav>
+        
+        <main class="content">
+            <div class="section-header">
+                <h2>{{ section_title }}</h2>
+                <p>{{ section_subtitle }}</p>
+            </div>
+            
+            <div class="course-path">
+                {% for course in courses %}
+                <a href="{{ url_for('start_course', course_id=course.id) }}" 
+                   class="course-circle">
+                    {{ course.id }}
+                </a>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

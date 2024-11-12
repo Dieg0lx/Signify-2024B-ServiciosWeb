@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f0f8ff;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f0f8ff;
+    padding: 2rem;
+    border-right: 1px solid #e0e0e0;
+}
+
+.logo {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin-bottom: 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.2rem;
+    display: block;
+    padding: 0.5rem 0;
+}
+
+.nav-links a.active {
+    font-weight: bold;
+}
+
+.content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    background-color: #e6d5f7;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-header p {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+.course-path {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem;
+}
+
+.course-circle {
+    width: 80px;
+    height: 80px;
+    background-color: #e6d5f7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.course-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.course-circle.completed {
+    background-color: #b19cd9;
+    color: white;
+}
+
+.missions-panel {
+    width: 250px;
+    background-color: #e6d5f7;
+    padding: 2rem;
+    border-left: 1px solid #d4c4e7;
+}
+
+.missions-panel h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.missions-list {
+    list-style: none;
+}
+
+.mission-item {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.mission-progress {
+    flex: 1;
+    height: 8px;
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #b19cd9;
+    transition: width 0.3s ease;
+}
+
+.profile-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.profile-info {
+    margin-top: 1rem;
+}
+
+.profile-info p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.danger-zone {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #ff4444;
+    border-radius: 5px;
+}
+
+.delete-account-btn {
+    background-color: #ff4444;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 5px;
+}
+
+@media (max-width: 1024px) {
+    .missions-panel {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 1rem;
+    }
+    
+    .content {
+        padding: 1rem;
+    }
+    
+    .course-circle {
+        width: 60px;
+        height: 60px;
+    }
+}

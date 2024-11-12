@@ -1,0 +1,227 @@
+:root {
+    --primary-color: #58cc02;
+    --primary-hover: #46a302;
+    --secondary-color: #ffc800;
+    --text-color: #000000;
+    --background-color: #fff;
+    --sidebar-color: #235390;
+    --sidebar-hover: #1b3f6f;
+    --card-background: #f7f7f7;
+    --progress-background: #e5e5e5;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f3f3f3;
+    color: var(--text-color);
+}
+
+.results-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.results-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    color: var(--text-color);
+}
+
+.results-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.results-header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.results-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.result-card {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary-color);
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.result-card h3 {
+    font-size: 1.2rem;
+    color: var(--sidebar-color);
+    margin-bottom: 0.5rem;
+}
+
+.result-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.progress-section {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+    border: 2px solid var(--secondary-color);
+}
+
+.progress-section h3 {
+    font-size: 1.5rem;
+    color: var(--sidebar-color);
+    margin-bottom: 1rem;
+}
+
+.level-progress {
+    height: 24px;
+    background-color: var(--progress-background);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.level-progress .progress-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.level-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.achievements-section {
+    margin-bottom: 3rem;
+}
+
+.achievements-section h3 {
+    font-size: 1.5rem;
+    color: var(--sidebar-color);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1.5rem;
+}
+
+.achievement-card {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid #e0e0e0;
+}
+
+.achievement-card.unlocked {
+    background-color: #fffde7;
+    border: 2px solid var(--secondary-color);
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.achievement-card img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-card p {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.missions-summary {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 2px solid var(--primary-color);
+}
+
+.missions-summary h3 {
+    font-size: 1.5rem;
+    color: var(--sidebar-color);
+    margin-bottom: 1rem;
+}
+
+.missions-list {
+    list-style: none;
+    padding: 0;
+}
+
+.mission-item {
+    background-color: var(--background-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.mission-info h4 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.mission-progress {
+    height: 12px;
+    background-color: var(--progress-background);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.mission-progress .progress-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+}
+
+.mission-status {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+    .results-container {
+        padding: 1rem;
+    }
+
+    .results-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .achievements-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}
