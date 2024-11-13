@@ -27,10 +27,16 @@
                         <div class="progress-bar" id="progress-bar"></div>
                     </div>
                 </div>
+                
                 <form method="POST" action="{{ url_for('submit_course', course_id=course.id) }}" class="course-form" id="course-form">
                     {% for question in course.questions %}
                     <div class="question" id="question-{{ question.id }}">
                         <h3>{{ question.question }}</h3>
+
+                        {% if question.image %}
+                            <img src="data:image/jpeg;base64,{{ question.image }}" alt="Imagen de la pregunta">
+                        {% endif %}
+                        
                         <div class="options-container">
                             {% for option in question.options %}
                             <label class="option">
@@ -41,6 +47,7 @@
                         </div>
                     </div>
                     {% endfor %}
+                    
                     <div class="navigation-buttons">
                         <button type="button" id="prev-btn" class="nav-btn" disabled>Anterior</button>
                         <button type="button" id="next-btn" class="nav-btn">Siguiente</button>
@@ -50,6 +57,7 @@
             </div>
         </main>
     </div>
+    
     <script>
         const form = document.getElementById('course-form');
         const questions = document.querySelectorAll('.question');

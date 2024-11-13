@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, url_for, session, flash
 from app import mysql
 from datetime import datetime
 from app import app
+import base64
 
 def calculate_level(points):
     return points // 100 + 1
@@ -85,9 +86,9 @@ def start_course(course_id):
             flash('Curso no encontrado')
             return redirect(url_for('courses_page'))
             
-        # Obtener preguntas del curso
+        # Obtener preguntas del curso, incluyendo la imagen en formato BLOB
         cur.execute("""
-            SELECT q.id, q.question_text, q.correct_answer 
+            SELECT q.id, q.question_text, q.correct_answer, q.image 
             FROM questions q 
             WHERE q.course_id = %s
         """, (course_id,))
@@ -109,11 +110,18 @@ def start_course(course_id):
             """, (question[0],))
             options = [opt[0] for opt in cur.fetchall()]
             
+            # Convertir el BLOB de la imagen a base64 si existe
+            image_base64 = None
+            if question[3]:  # Verifica si hay una imagen
+                image_base64 = base64.b64encode(question[3]).decode('utf-8')
+            
+            # Agregar cada pregunta con sus opciones y la imagen en base64
             course['questions'].append({
                 'id': question[0],
                 'question': question[1],
                 'options': options,
-                'correct': question[2]
+                'correct': question[2],
+                'image': image_base64  # Agrega la imagen convertida en base64
             })
             
         return render_template('course.html', course=course)
@@ -124,6 +132,7 @@ def start_course(course_id):
         return redirect(url_for('courses_page'))
     finally:
         cur.close()
+
 
     return render_template('course.html', course=course)
 
