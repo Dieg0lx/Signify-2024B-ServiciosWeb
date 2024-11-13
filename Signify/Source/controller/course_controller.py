@@ -23,12 +23,10 @@ def courses_page():
     try:
         # Obtener cursos con sus preguntas y opciones
         cur.execute("""SELECT * FROM courses;""") 
-        
         rows = cur.fetchall()
         
         for row in rows:
             course_id, course_title = row
-            
             if not current_course or current_course['id'] != course_id:
                 current_course = {
                     'id': course_id,
@@ -134,8 +132,6 @@ def start_course(course_id):
         cur.close()
 
 
-    return render_template('course.html', course=course)
-
 @app.route('/course_result/<int:user_id>')
 def course_result(user_id):
     if 'user_id' not in session:
@@ -143,16 +139,21 @@ def course_result(user_id):
     
     try:
         cur = mysql.cursor()
-        cur.execute("""SELECT course_results.score, courses.title FROM course_results JOIN courses ON course_results.course_id = courses.id WHERE course_results.user_id = %s""", (user_id)) 
+        cur.execute("""SELECT course_results.score, courses.title 
+                       FROM course_results 
+                       JOIN courses ON course_results.course_id = courses.id 
+                       WHERE course_results.user_id = %s""", (user_id,)) 
             
         result = cur.fetchone()
-
-        cr = {
-            'score': result[0],
-            'title': result[1],
-        }
-
-        return render_template('course_results.html', cr=cr)
+        if result:
+            cr = {
+                'score': result[0],
+                'title': result[1],
+            }
+            return render_template('course_results.html', cr=cr)
+        else:
+            flash("No se encontraron resultados para este curso.")
+            return redirect(url_for('courses_page'))
 
     except Exception as e:
         print(f"Error loading result: {e}")
@@ -191,6 +192,7 @@ def submit_course(course_id):
             (user_id, course_id, score) 
             VALUES (%s, %s, %s)
         """, (session['user_id'], course_id, score))
+        mysql.commit()  # Asegurarse de que se guarden los datos
         
         # Actualizar progreso del usuario
         cur.execute("""
@@ -199,18 +201,10 @@ def submit_course(course_id):
                 total_points = total_points + %s 
             WHERE id = %s
         """, (score, session['user_id']))
-        
-        # Actualizar misiones
-        cur.execute("""
-            UPDATE missions 
-            SET progress = progress + 1 
-            WHERE title = 'Completa 3 lecciones'
-        """)
-        
         mysql.commit()
+        
         flash(f'¡Curso completado! Puntuación: {score}%')
-        print(session['user_id'])
-        return redirect(url_for('course_result', user_id=(session['user_id'])))
+        return redirect(url_for('course_result', user_id=session['user_id']))
 
     except Exception as e:
         print(f"Error submitting course: {e}")
