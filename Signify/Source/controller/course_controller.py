@@ -17,12 +17,12 @@ def courses_page():
         return redirect(url_for('login'))
     
     cur = mysql.cursor()
-    courses = []  # Asegúrate de inicializar la lista
+    courses = []
     current_course = None
 
     try:
         # Obtener cursos con sus preguntas y opciones
-        cur.execute("""SELECT * FROM courses;""") 
+        cur.execute("SELECT * FROM courses;")
         rows = cur.fetchall()
         
         for row in rows:
@@ -35,16 +35,16 @@ def courses_page():
                 courses.append(current_course)
         
         return render_template('courses.html',
-                            section_title='Seccion 1',
-                            section_subtitle='Abecedario Básico',
-                            courses=courses)
+                               section_title='Seccion 1',
+                               section_subtitle='Abecedario Básico',
+                               courses=courses)
 
     except Exception as e:
         print(f"Database error: {e}")
         return render_template('courses.html',
-                           section_title='Seccion 1',
-                            section_subtitle='Abecedario Básico',
-                            courses=courses)
+                               section_title='Seccion 1',
+                               section_subtitle='Abecedario Básico',
+                               courses=courses)
     finally:
         cur.close()
 
@@ -76,7 +76,7 @@ def start_course(course_id):
 
     cur = mysql.cursor()
     try:
-        # Primero verificar si el curso existe
+        # Verificar si el curso existe
         cur.execute("SELECT id, title FROM courses WHERE id = %s", (course_id,))
         course_data = cur.fetchone()
         
@@ -119,7 +119,7 @@ def start_course(course_id):
                 'question': question[1],
                 'options': options,
                 'correct': question[2],
-                'image': image_base64  # Agrega la imagen convertida en base64
+                'image': image_base64
             })
             
         return render_template('course.html', course=course)
@@ -131,24 +131,28 @@ def start_course(course_id):
     finally:
         cur.close()
 
-
-@app.route('/course_result/<int:user_id>')
-def course_result(user_id):
+@app.route('/course_result/<int:user_id>/<int:course_id>')
+def course_result(user_id, course_id):
     if 'user_id' not in session:
         return redirect(url_for('login'))
     
     try:
         cur = mysql.cursor()
-        cur.execute("""SELECT course_results.score, courses.title 
-                       FROM course_results 
-                       JOIN courses ON course_results.course_id = courses.id 
-                       WHERE course_results.user_id = %s""", (user_id,)) 
-            
+        # Obtener el resultado específico del curso para el usuario
+        cur.execute("""
+            SELECT course_results.score, courses.title 
+            FROM course_results 
+            JOIN courses ON course_results.course_id = courses.id 
+            WHERE course_results.user_id = %s AND course_results.course_id = %s
+            ORDER BY course_results.completed_at DESC
+            LIMIT 1
+        """, (user_id, course_id))
+        
         result = cur.fetchone()
         if result:
             cr = {
-                    'score': result[-1]['score'], 
-                    'title': result[-1]['title'],
+                'score': result[0],
+                'title': result[1],
             }
             return render_template('course_results.html', cr=cr)
         else:
@@ -184,15 +188,18 @@ def submit_course(course_id):
                 correct_answers += 1
         
         # Calcular puntuación
-        score = int((correct_answers / total_questions) * 100)
+        if total_questions > 0:
+            score = int((correct_answers / total_questions) * 100)
+        else:
+            score = 0
         
         # Guardar resultado
         cur.execute("""
             INSERT INTO course_results 
-            (user_id, course_id, score) 
-            VALUES (%s, %s, %s)
-        """, (session['user_id'], course_id, score))
-        mysql.commit()  # Asegurarse de que se guarden los datos
+            (user_id, course_id, score, completed_at) 
+            VALUES (%s, %s, %s, %s)
+        """, (session['user_id'], course_id, score, datetime.now()))
+        mysql.commit()
         
         # Actualizar progreso del usuario
         cur.execute("""
@@ -204,7 +211,7 @@ def submit_course(course_id):
         mysql.commit()
         
         flash(f'¡Curso completado! Puntuación: {score}%')
-        return redirect(url_for('course_result', user_id=session['user_id']))
+        return redirect(url_for('course_result', user_id=session['user_id'], course_id=course_id))
 
     except Exception as e:
         print(f"Error submitting course: {e}")
