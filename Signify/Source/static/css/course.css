@@ -95,14 +95,17 @@ body {
 }
 
 .question {
+        
     background-color: #ffffff;
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 1.5rem;
+    border: 1px solid #434040; 
 }
 
 .question h3 {
+    text-align: center  ;
     font-size: 1.5rem;
     color: #3c3c3c;
     margin-bottom: 1.5rem;
@@ -127,7 +130,7 @@ body {
 
 .option:hover {
     background-color: #fffde7;
-    border-color: #ffd900;
+    border-color: #e6d5f7;
 }
 
 .option input[type="radio"] {
@@ -226,4 +229,6 @@ body {
     .course-wrapper {
         padding: 0 1rem;
     }
+    
+    
 }

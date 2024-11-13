@@ -147,8 +147,8 @@ def course_result(user_id):
         result = cur.fetchone()
         if result:
             cr = {
-                'score': result[0],
-                'title': result[1],
+                    'score': result[-1]['score'], 
+                    'title': result[-1]['title'],
             }
             return render_template('course_results.html', cr=cr)
         else:

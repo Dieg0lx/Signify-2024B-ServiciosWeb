@@ -13,10 +13,11 @@
         <nav class="sidebar">
             <h1 class="logo">Signify</h1>
             <ul class="nav-links">
-                <li><a href="{{ url_for('courses_page') }}">Cursos</a></li>
-                <li><a href="{{ url_for('results') }}" class="active">Resultados</a></li>
-                <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                <li><a href="{{ url_for('courses_page') }}" {% if request.endpoint == 'courses_page' %}class="active"{% endif %}>Cursos</a></li>
+                <li><a href="{{ url_for('results') }}" {% if request.endpoint == 'results' %}class="active"{% endif %}>Resultados</a></li>
+                <li><a href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}class="active"{% endif %}>Perfil</a></li>
             </ul>
+            
         </nav>
         
         <main class="content">

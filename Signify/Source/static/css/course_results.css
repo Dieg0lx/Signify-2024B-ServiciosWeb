@@ -4,7 +4,7 @@
     --secondary-color: #ffc800;
     --text-color: #3c3c3c;
     --background-color: #fff;
-    --sidebar-color: #235390;
+  
     --error-color: #ff4b4b;
     --input-border: #e5e5e5;
     --button-purple: #a568f6;
@@ -25,18 +25,13 @@ body {
     min-height: 100vh;
 }
 
-.sidebar {
-    width: 250px;
-    background-color: var(--sidebar-color);
-    padding: 2rem;
-    color: #ffffff;
-}
+
 
 .logo {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 2rem;
-    color: #ffffff;
+   
 }
 
 .nav-links {
@@ -44,16 +39,7 @@ body {
     padding: 0;
 }
 
-.nav-links li {
-    margin-bottom: 1rem;
-}
 
-.nav-links a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: color 0.3s ease;
-}
 
 .nav-links a:hover, .nav-links a.active {
     color: var(--secondary-color);
