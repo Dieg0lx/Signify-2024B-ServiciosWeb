@@ -25,7 +25,7 @@ try:
     mysql = pymysql.connect(
         host='localhost',
         user='root',
-        password='cesar123',
+        password='carlos123',
         db='signify_db',
         ssl={"ssl": {"tls_version": "TLSv1.2"}}  # Esto es opcional si tu servidor requiere SSL
     )

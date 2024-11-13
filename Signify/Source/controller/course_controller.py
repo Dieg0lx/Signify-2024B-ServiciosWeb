@@ -1,5 +1,5 @@
 # course_controller.py
-from flask import render_template, request, redirect, url_for, session, flash
+from flask import render_template, request, redirect, url_for, session, flash, jsonify
 from app import mysql
 from datetime import datetime
 from app import app
@@ -69,7 +69,7 @@ def results():
     cur.close()
     return render_template('results.html', user=user_data)
 
-@app.route('/course/<int:course_id>', methods=['GET', 'POST'])
+@app.route('/course/<int:course_id>', methods=['GET'])
 def start_course(course_id):
     if 'user_id' not in session:
         return redirect(url_for('login'))
@@ -131,6 +131,57 @@ def start_course(course_id):
     finally:
         cur.close()
 
+@app.route('/submit_course/<int:course_id>', methods=['POST'])
+def submit_course(course_id):
+    if 'user_id' not in session:
+        return jsonify({'error': 'User not logged in'}), 401
+        
+    cur = mysql.cursor()
+    try:
+        # Obtener respuestas del usuario
+        answers = request.json
+        correct_answers = 0
+        total_questions = len(answers)
+        
+        # Verificar respuestas
+        for question_id, answer in answers.items():
+            cur.execute("SELECT correct_answer FROM questions WHERE id = %s", (question_id,))
+            correct = cur.fetchone()[0]
+            if answer == correct:
+                correct_answers += 1
+        
+        # Calcular puntuación
+        score = int((correct_answers / total_questions) * 100)
+        
+        # Guardar resultado
+        cur.execute("""
+            INSERT INTO course_results 
+            (user_id, course_id, score, completed_at) 
+            VALUES (%s, %s, %s, %s)
+        """, (session['user_id'], course_id, score, datetime.now()))
+        mysql.commit()
+        
+        # Actualizar progreso del usuario
+        cur.execute("""
+            UPDATE users 
+            SET completed_courses = completed_courses + 1,
+                total_points = total_points + %s 
+            WHERE id = %s
+        """, (score, session['user_id']))
+        mysql.commit()
+        
+        return jsonify({
+            'message': f'¡Curso completado! Puntuación: {score}%',
+            'redirect': url_for('course_result', user_id=session['user_id'], course_id=course_id)
+        })
+
+    except Exception as e:
+        print(f"Error submitting course: {e}")
+        mysql.rollback()
+        return jsonify({'error': 'Error al enviar resultados'}), 500
+    finally:
+        cur.close()
+
 @app.route('/course_result/<int:user_id>/<int:course_id>')
 def course_result(user_id, course_id):
     if 'user_id' not in session:
@@ -165,59 +216,3 @@ def course_result(user_id, course_id):
         return redirect(url_for('courses_page'))
     finally:
         cur.close()
-
-@app.route('/submit_course/<int:course_id>', methods=['POST'])
-def submit_course(course_id):
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-        
-    cur = mysql.cursor()
-    try:
-        # Obtener respuestas del usuario
-        answers = request.form.to_dict()
-        correct_answers = 0
-        total_questions = 0
-        
-        # Verificar respuestas
-        for question_id, answer in answers.items():
-            total_questions += 1
-            q_id = int(question_id)
-            cur.execute("SELECT correct_answer FROM questions WHERE id = %s", (q_id,))
-            correct = cur.fetchone()[0]
-            if answer == correct:
-                correct_answers += 1
-        
-        # Calcular puntuación
-        if total_questions > 0:
-            score = int((correct_answers / total_questions) * 100)
-        else:
-            score = 0
-        
-        # Guardar resultado
-        cur.execute("""
-            INSERT INTO course_results 
-            (user_id, course_id, score, completed_at) 
-            VALUES (%s, %s, %s, %s)
-        """, (session['user_id'], course_id, score, datetime.now()))
-        mysql.commit()
-        
-        # Actualizar progreso del usuario
-        cur.execute("""
-            UPDATE users 
-            SET completed_courses = completed_courses + 1,
-                total_points = total_points + %s 
-            WHERE id = %s
-        """, (score, session['user_id']))
-        mysql.commit()
-        
-        flash(f'¡Curso completado! Puntuación: {score}%')
-        return redirect(url_for('course_result', user_id=session['user_id'], course_id=course_id))
-
-    except Exception as e:
-        print(f"Error submitting course: {e}")
-        mysql.rollback()
-        flash('Error al enviar resultados')
-    finally:
-        cur.close()
-    
-    return redirect(url_for('courses_page'))

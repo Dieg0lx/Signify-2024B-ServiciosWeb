@@ -10,8 +10,6 @@
 </head>
 <body>
     <div class="container">
-       
-        
         <main class="content">
             <div class="course-wrapper">
                 <div class="course-header">
@@ -21,122 +19,110 @@
                     </div>
                 </div>
                 
-                <form method="POST" action="{{ url_for('submit_course', course_id=course.id) }}" class="course-form" id="course-form">
-                    {% for question in course.questions %}
-                    <div class="question" id="question-{{ question.id }}">
-                        <h3>{{ question.question }}</h3>
+                <div id="question-container">
+                    <!-- Las preguntas se cargarán aquí dinámicamente -->
+                </div>
 
-                        <div class="image-container">
-                            {% if question.image %}
-                                <img src="data:image/jpeg;base64,{{ question.image }}" alt="Imagen de la pregunta">
-                            {% endif %}
-                        </div>
-                        <style>
-                            .image-container {
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                height: 100%;  
-                                    
-                            }
-                            img {
-                                
-                                padding-bottom: 30px;
-                                max-width: 100%; 
-                                max-height: 100%; 
-                            }
-                        </style>
-                        
-                        
-                        <div class="options-container">
-                            {% for option in question.options %}
-                            <label class="option">
-                                <input type="radio" name="{{ question.id }}" value="{{ option }}" required>
-                                <span class="option-text">{{ option }}</span>
-                            </label>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endfor %}
-                    
-                    <div class="navigation-buttons">
-                        <button type="button" id="prev-btn" class="nav-btn" disabled>Anterior</button>
-                        <button type="button" id="next-btn" class="nav-btn">Siguiente</button>
-                        <button type="submit" id="submit-btn" class="submit-btn" style="display: none;">Enviar respuestas</button>
-                    </div>
-                </form>
+                <div class="navigation-buttons">
+                    <button id="check-btn" class="nav-btn">Comprobar</button>
+                    <button id="next-btn" class="nav-btn" style="display: none;">Siguiente</button>
+                    <button id="submit-btn" class="submit-btn" style="display: none;">Enviar respuestas</button>
+                </div>
+
+                <div id="feedback-container" class="feedback" style="display: none;"></div>
             </div>
         </main>
     </div>
     
     <script>
-        const form = document.getElementById('course-form');
-        const questions = document.querySelectorAll('.question');
-        const progressBar = document.getElementById('progress-bar');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const submitBtn = document.getElementById('submit-btn');
+        const questions = {{ course.questions | tojson | safe }};
         let currentQuestion = 0;
+        let userAnswers = {};
 
         function showQuestion(index) {
-            questions.forEach((q, i) => {
-                if (i === index) {
-                    q.style.display = 'block';
-                } else {
-                    q.style.display = 'none';
-                }
-            });
-            updateProgressBar();
-            updateNavigationButtons();
+            const question = questions[index];
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <div class="question" id="question-${question.id}">
+                    <h3>${question.question}</h3>
+                    ${question.image ? `<div class="image-container"><img src="data:image/jpeg;base64,${question.image}" alt="Imagen de la pregunta" class="question-image"></div>` : ''}
+                    <div class="options-container">
+                        ${question.options.map((option, i) => `
+                            <label class="option">
+                                <input type="radio" name="question-${question.id}" value="${option}" required>
+                                <span class="option-text">${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
         }
 
         function updateProgressBar() {
             const progress = ((currentQuestion + 1) / questions.length) * 100;
-            progressBar.style.width = `${progress}%`;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
         }
 
-        function updateNavigationButtons() {
-            prevBtn.disabled = currentQuestion === 0;
-            if (currentQuestion === questions.length - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'block';
-            } else {
-                nextBtn.style.display = 'block';
-                submitBtn.style.display = 'none';
-            }
-        }
-
-        prevBtn.addEventListener('click', () => {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-            }
-        });
-
-        nextBtn.addEventListener('click', () => {
-            const radios = questions[currentQuestion].querySelectorAll('input[type="radio"]');
-            const answered = Array.from(radios).some(r => r.checked);
-            if (answered && currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
-            } else if (!answered) {
+        function checkAnswer() {
+            const selectedOption = document.querySelector(`input[name="question-${questions[currentQuestion].id}"]:checked`);
+            if (!selectedOption) {
                 alert('Por favor, selecciona una respuesta antes de continuar.');
+                return;
             }
-        });
 
-        form.addEventListener('submit', (e) => {
-            const allQuestionsAnswered = Array.from(questions).every(q => {
-                const radios = q.querySelectorAll('input[type="radio"]');
-                return Array.from(radios).some(r => r.checked);
+            const userAnswer = selectedOption.value;
+            const correctAnswer = questions[currentQuestion].correct;
+            const isCorrect = userAnswer === correctAnswer;
+
+            userAnswers[questions[currentQuestion].id] = userAnswer;
+
+            const feedbackContainer = document.getElementById('feedback-container');
+            feedbackContainer.innerHTML = isCorrect 
+                ? '<p class="correct">¡Correcto!</p>' 
+                : `<p class="incorrect">Incorrecto. La respuesta correcta es: ${correctAnswer}</p>`;
+            feedbackContainer.style.display = 'block';
+
+            document.getElementById('check-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'block';
+
+            // Disable all radio buttons after checking
+            document.querySelectorAll(`input[name="question-${questions[currentQuestion].id}"]`).forEach(input => {
+                input.disabled = true;
             });
+        }
 
-            if (!allQuestionsAnswered) {
-                e.preventDefault();
-                alert('Por favor, responde todas las preguntas antes de enviar.');
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion(currentQuestion);
+                updateProgressBar();
+                document.getElementById('check-btn').style.display = 'block';
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('feedback-container').style.display = 'none';
+            } else {
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('submit-btn').style.display = 'block';
             }
+        }
+
+        document.getElementById('check-btn').addEventListener('click', checkAnswer);
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            // Send userAnswers to the server
+            fetch('{{ url_for("submit_course", course_id=course.id) }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userAnswers)
+            }).then(response => response.json())
+              .then(data => {
+                  window.location.href = data.redirect;
+              });
         });
 
         showQuestion(currentQuestion);
+        updateProgressBar();
     </script>
 </body>
 </html>
