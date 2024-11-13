@@ -13,11 +13,10 @@
         <main class="content">
             <div class="course-wrapper">
                 <div class="course-header">
-                    <h2>{{ course.title }}</h2>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progress-bar"></div>
-                    </div>
+                    <h2 class="lesson-title">{{ course.title }}</h2>
                 </div>
+                
+                <div id="feedback-container" class="feedback" style="display: none;"></div>
                 
                 <div id="question-container">
                     <!-- Las preguntas se cargarán aquí dinámicamente -->
@@ -28,11 +27,15 @@
                     <button id="next-btn" class="nav-btn" style="display: none;">Siguiente</button>
                     <button id="submit-btn" class="submit-btn" style="display: none;">Enviar respuestas</button>
                 </div>
-
-                <div id="feedback-container" class="feedback" style="display: none;"></div>
             </div>
         </main>
     </div>
+    
+    <footer class="footer">
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </footer>
     
     <script>
         const questions = {{ course.questions | tojson | safe }};
