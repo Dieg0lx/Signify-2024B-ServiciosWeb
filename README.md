@@ -6,8 +6,6 @@ A continuación se describen los microservicios que componen el sistema:
 ## Microservicios
 
 ### 1. Servicio de Gestión de Usuarios
-- **Interfaz grafica:** [Flutter]
-- **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
 - **Framework:** [Flask]
 - **Base de Datos:** [MySQL]
@@ -40,8 +38,6 @@ A continuación se describen los microservicios que componen el sistema:
 ![Diagrama de servicio de gestion de usuarios](https://raw.githubusercontent.com/Dieg0lx/Proyecto-Servicios-Web/73697093b0311d188540745ed0c52e7e051a0b46/imgs_readme/tabla_1.png)
 
 ### 2. Servicio de Contenidos
-- **Interfaz grafica:** [Flutter]
-- **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
 - **Framework:** [Flask]
 - **Base de Datos:** [MySQL]
@@ -73,8 +69,6 @@ A continuación se describen los microservicios que componen el sistema:
 ![Diagrama de servicio contenidos](https://raw.githubusercontent.com/Dieg0lx/Proyecto-Servicios-Web/main/imgs_readme/tabla_2.png)
 
 ### 3. Servicio de Evaluación
-- **Interfaz grafica:** [Flutter]
-- **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
 - **Framework:** [Flask]
 - **Base de Datos:** [MySQL]
@@ -116,8 +110,6 @@ A continuación se describen los microservicios que componen el sistema:
 ![Diagrama de servicio evaluacion](https://raw.githubusercontent.com/Dieg0lx/Proyecto-Servicios-Web/main/imgs_readme/tabla_3.png)
 
 ### 4. Servicio de Notificaciones
-- **Interfaz grafica:** [Flutter]
-- **Servicio de nube:** [Amazon Web Service]
 - **Lenguaje:** [Python]
 - **Framework:** [Flask]
 - **Base de Datos:** [MySQL]
