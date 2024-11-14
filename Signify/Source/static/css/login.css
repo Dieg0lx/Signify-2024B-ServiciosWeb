@@ -144,3 +144,34 @@
         padding: 1.5rem;
     }
 }
+
+/* Estilo para el contenedor de mensajes flash */
+.flash-messages {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Estilo para los mensajes flash individuales, con categoría de error */
+.flash-message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+/* Estilo para mensajes de éxito, si deseas usar otros tipos de mensajes */
+.flash-message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+/* Puedes ajustar el estilo para que se integre con el resto de los colores */
+.flash-message {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+}

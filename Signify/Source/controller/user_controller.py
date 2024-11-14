@@ -50,27 +50,34 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    session.clear()  # Clear any existing session
-    
+    session.clear()  # Limpiar cualquier sesión existente
+
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        
+
         cur = mysql.cursor()
         try:
+            # Primero verificamos si el correo existe en la base de datos
             cur.execute("SELECT * FROM users WHERE email = %s", (email,))
             user = cur.fetchone()
-            
-            if user and check_password_hash(user[4], password):
-                session['user_id'] = user[0]
-                session.permanent = False  # Session expires when browser closes
-                return redirect(url_for('courses_page'))
+
+            if user is None:
+                # El correo no está registrado
+                flash('El correo electrónico no está registrado.', 'error')
+            elif not check_password_hash(user[4], password):
+                # La contraseña es incorrecta
+                flash('Contraseña incorrecta. Inténtalo de nuevo.', 'error')
             else:
-                flash('Correo o contraseña incorrectos')
+                # Credenciales válidas, iniciar sesión
+                session['user_id'] = user[0]
+                session.permanent = False  # La sesión expira al cerrar el navegador
+                return redirect(url_for('courses_page'))
         finally:
             cur.close()
-            
+
     return render_template('login.html')
+
 
 @app.route('/logout')
 def logout():
