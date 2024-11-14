@@ -59,7 +59,6 @@
                     <div class="achievements-grid">
                         {% for achievement in user.achievements %}
                         <div class="achievement-card {% if achievement.unlocked %}unlocked{% endif %}">
-                            <img src="{{ url_for('static', filename='images/' + achievement.icon) }}" alt="{{ achievement.name }}">
                             <p>{{ achievement.name }}</p>
                         </div>
                         {% endfor %}
