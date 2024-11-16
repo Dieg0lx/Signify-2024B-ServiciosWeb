@@ -75,9 +75,9 @@
 .course-path {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    align-items: center;
+    gap: 2rem; /* Espacio entre los círculos */
     padding: 2rem;
+    align-items: center; /* Asegura que todos los elementos estén centrados */
 }
 
 .course-circle {
@@ -92,7 +92,17 @@
     color: #333;
     text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Alternar zig-zag con márgenes */
+.course-circle:nth-child(odd) {
+    margin-left: -150px; /* Círculos impares se desplazan a la izquierda */
+}
+
+.course-circle:nth-child(even) {
+    margin-left: 150px; /* Círculos pares se desplazan a la derecha */
 }
 
 .course-circle:hover {
